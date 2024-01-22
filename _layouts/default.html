@@ -11,13 +11,12 @@
     {% include head-custom.html %}
   </head>
   <body>
-    
     <header class="page-header" role="banner">
       <h1 style="color: white;" class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 style="color: white;">
-        <a class="author" href="mailto: {{ site.student.number }}.buas.nl">{{ site.student.name }}</a>
+        <a class="author" href="mailto: {{ site.student.number }}.buas.nl">{{ site.author.name }}</a>
       </h2>
-      <h2 style="color: white;">{{ site.student.number }}</h2>
+      <h2 style="color: white;">{{ site.author.email }}</h2>
       <a href="/" class="btn"> 🏠 </a>
 
       {% for ilo in site.ilos %}
@@ -25,11 +24,7 @@
       {% endfor %}
     </header>
 
-    <div class="site-name">
-      <a href="/" title="Return to the homepage">{{ site.title }}</a>
-    </div>
-
-    <main id="content" class="main-content" role="main">
+    <main id="content" class="main-content" role="main" style="background-color: rgb(15, 33, 40);" style="color: lightgray;">
       {{ content }}
 
       <footer class="site-footer">
