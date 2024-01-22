@@ -1,4 +1,6 @@
-theme: jekyll-theme-midnight
+remote_theme: pages-themes/midnight@v0.2.0
+plugins:
+- jekyll-remote-theme
 title: "The Pitfalls of Porting Code to the GPU"
 description: "Common mistakes beginners might make when porting code to the GPU"
 author:
