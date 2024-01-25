@@ -24,7 +24,49 @@ These mistakes aren't always apparent, and on certain platforms, they may not ev
 
 I wanted to create a 3D Constructive Solid Geometry (CSG) editor, utilizing Signed Distance Fields (SDF) to define shapes as mathematical functions. The approach involved sampling the values of combined objects in a 3D grid of points. I would then send the data to a Marching Cubes algorithm to construct a mesh, and eventually render it using a basic shader.
 
-Below is a condensed version of the C++ function responsible for generating vertices and indices for draw order through the Marching Cubes algorithm. The original function, spanning almost 200 lines, has been significantly simplified for conciseness.
+
+## A Lot Of Big Words
+
+Ok, let's slow it down a bit, because that paragraph had a lot of complicated terminology which you need to understand before we go forward. I'll explain each of these terms in detail.
+
+### CSG
+First, let's start with Constructive Solid Geometry (CSG).
+CSG refers to the method of combining primitive shapes to create more complex ones. For example, you can combine a cube and a pyramid to create a house, or subtract a cylinder from a cube to create a cube with a hole in it.
+
+Here's a diagram showing how CSG can be used to create complex shapes from simple ones:
+<br>
+![CSG Showcase](csg-shocase.png)
+<br>
+
+
+### SDF
+Signed Distance Fields (SDF) are a way of representing shapes as mathematical functions. The function takes a point in 3D space as input and returns the distance from that point to the nearest surface of the shape.
+
+If the point is outside the shape, the resulting distance is positive, if the point is inside the shape, the distance is negative, with 0 being on the surface of the shape.
+
+This picture shows a 2D rabbit represented as an SDF:
+<br>
+![SDF Showcase](sdf-showcase.png)
+<br>
+
+
+### Marching Cubes
+Marching Cubes is an algorithm that constructs a mesh from a 3D grid of values, approximating a solid object. Grid resolution determines the accuracy of the approximation.
+
+The algorithm's 2D version, Marching Squares, is illustrated below:
+<br>
+![Marching Squares](marching-squares.png)
+<br>
+
+Its goal is to identify groups of black dots (representing negative values) and enclose them within a shape.
+
+Implementation details may vary, but the core concept involves connecting "zero points" between pairs of white-black dots to form the shape.
+A "zero point" is the point between two dots, one positive, one negative, where the transition from positive to negative occurs.
+
+
+## The Problem
+
+Below is a condensed version of the C++ function responsible for generating vertices and indices for draw order through the Marching Cubes algorithm. The original function, spanning almost 200 lines, has been significantly simplified for conciseness, and because the full version is not relevant to the topic at hand.
 ```cpp
 MeshData build_mesh(VoxelGrid voxels) {
     vector<vec3f> vertices;
@@ -235,3 +277,26 @@ glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(vec4) * num_vertices, nullptr, GL_
 With this simple adjustment, the resulting mesh now looks like this:
 <br>
 ![after-memory-alignment](after-memory-alignment.png)
+
+
+## What Did We Learn?
+The main takeaway from this article is that GPUs are very powerful tools, but programming for a GPU requires more attention to the specifications of the APIs that you use than with more traditional programming methods.
+
+Graphics APIs like OpenGL and Vulkan are designed to be cross-platform, but the GPU drivers that implement them, byb definition, are not. This means that, even with the best efforts of the API developers to ensure consistent rules, some manufacturers may interpret the rules differently, resulting in unexpected behavior.
+
+
+## Ok, Now What?
+With this functional version of the algorithm, we can now generate real-time meshes and dynamically modify the voxel grid, enabling the creation of a CSG editor.
+<video width="100%" controls>
+<source src="editor-showcase.mp4" type="video/mp4">
+</video>
+
+While the UI serves as fluff, the heart of the editor (and the focus of this article) is the GPU implementation of the Marching Cubes algorithm. This implementation enables real-time rendering of objects, providing immediate visual feedback as changes are made.
+
+SDFs are straightforward enough to only account for a small portion of the time needed to render objects. Therefore, ensuring the efficiency of the Marching Cubes algorithm was crucial.
+
+If you're a beginner, and you're interested in learning more about GPU programming, I recommend checking out [learnopengl.com](https://learnopengl.com). It's a valuable resource for mastering OpenGL, serving as a major reference during the creation of this article and my introduction to graphics.
+
+For those seeking more advanced courses or tutorials, Vulkan presents a compelling alternative to OpenGL. As a more modern API, it offers robust capabilities. However, it comes with increased complexity and is not as beginner-friendly as OpenGL.
+
+One of the advantages of Vulkan, however, is that the API specification is more rigid, and the rules are more clearly defined. This consistency across different GPUs makes Vulkan a more attractive option for those seeking to create cross-platform applications, and problems like the ones described in this article are less likely to occur (although not impossible).
