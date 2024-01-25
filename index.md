@@ -282,7 +282,7 @@ With this simple adjustment, the resulting mesh now looks like this:
 ## What Did We Learn?
 The main takeaway from this article is that GPUs are very powerful tools, but programming for a GPU requires more attention to the specifications of the APIs that you use than with more traditional programming methods.
 
-Graphics APIs like OpenGL and Vulkan are designed to be cross-platform, but the GPU drivers that implement them, byb definition, are not. This means that, even with the best efforts of the API developers to ensure consistent rules, some manufacturers may interpret the rules differently, resulting in unexpected behavior.
+Graphics APIs like OpenGL and Vulkan are designed to be cross-platform, but the specific GPU drivers that implement them, by definition, are not. This means that, even with the best efforts of the API developers to ensure consistent rules, some manufacturers may interpret the rules differently, resulting in unexpected behavior.
 
 
 ## Ok, Now What?
