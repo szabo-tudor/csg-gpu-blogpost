@@ -10,7 +10,7 @@ When coding for a platform for the first time, it's tempting to assume that the 
 
 However, GPUs challenge this "standard." When crafting a shader, its execution may vary across different machines or even on the same machine with a different OS or a distinct version of the same OS, or driver.
 
-This article assumes you possess basic knowledge of C++, Modern OpenGL, GLSL, and matrix/vector math. If you can draw a cube and implement a flying camera using OpenGL, you should be well-prepared. Consider referring to the initial chapters of learnopengl.com to solidify your understanding of the fundamentals.
+This article assumes you possess basic knowledge of C++, Modern OpenGL, GLSL, and matrix/vector math. If you can draw a cube and implement a flying camera using OpenGL, you should be well-prepared. Consider referring to the initial chapters of [learnopengl.com](https://learnopengl.com) to solidify your understanding of the fundamentals.
 
 
 ## Reason For The Topic
@@ -20,7 +20,7 @@ I selected this topic because, as a relatively novice GPU programmer, I've encou
 These mistakes aren't always apparent, and on certain platforms, they may not even be considered errors. For instance, Nvidia GPUs adhere to different standards regarding memory alignment, priorities, profiling, etc., compared to AMD, or Intel GPUs.
 
 
-The Problem
+## The Problem
 
 I wanted to create a 3D Constructive Solid Geometry (CSG) editor, utilizing Signed Distance Fields (SDF) to define shapes as mathematical functions. The approach involved sampling the values of combined objects in a 3D grid of points. I would then send the data to a Marching Cubes algorithm to construct a mesh, and eventually render it using a basic shader.
 
@@ -93,7 +93,7 @@ void main() {
 }
 ```
 
-This way, the vertex_data array is already on the GPU. When drawing the mesh, we simply bind the array to the appropriate locations and execute the draw commands. Binding the buffers alone significantly reduces strain on the bus, and the CPU only needs to send draw and dispatch commands, a process much faster than transmitting millions of vertices.
+This way, the `vertex_data` array is already on the GPU. When drawing the mesh, we simply bind the array to the appropriate locations and execute the draw commands. Binding the buffers alone significantly reduces strain on the bus, and the CPU only needs to send draw and dispatch commands, a process much faster than transmitting millions of vertices.
 
 Creating the buffers is straightforward in C++:
 
@@ -144,7 +144,7 @@ Consequently, many vertices in the buffer remain untouched. Vertices not generat
 
 Fortunately, this initial problem has a relatively straightforward solution.
 We need to clear the buffer before any data is written to it to eliminate any pre-existing garbage data.
-xSince the clear shader is simple, I'll show it here in its entirety:
+Since the clear shader is simple, I'll show it here in its entirety:
 ```glsl
 #version 450 core
 
@@ -193,7 +193,7 @@ layout(std430, binding = 0) buffer VertexData {
 
 Technically, this is not incorrect, and it might seem to work on NVidia GPUs or select AMD GPUs. However, the underlying problem arises from how different GPUs handle memory alignment, compounded by the lack of a concrete standard in OpenGL for memory alignment, leaving room for interpretation by GPU manufacturers.
 
-The primary issue lies with std430, a layout qualifier that only loosely specifies that memory should be tightly packed. However, OpenGL allows different rules, especially for vec3, which is the type used for the vertex buffer.
+The primary issue lies with `std430`, a layout qualifier that only loosely specifies that memory should be tightly packed. However, OpenGL allows different rules, especially for vec3, which is the type used for the vertex buffer.
 
 For example, Intel GPUs will align the 12 byte vec3 buffer to 16 bytes, resulting in a structure like this:
 ```
@@ -201,7 +201,7 @@ For example, Intel GPUs will align the 12 byte vec3 buffer to 16 bytes, resultin
 ```
 Here, `_` represents an empty space equivalent to the size of a float (4 bytes).
 
-A more defined standard is std140, which mandates that vec3, along with other types, should be aligned to 16 bytes, regardless of their size.
+A more defined standard is `std140`, which mandates that vec3, along with other types, should be aligned to 16 bytes, regardless of their size.
 While it retains the less efficient alignment of a vec4, introducing some empty space, this alignment rule is no longer inconsistent across different GPUs.
 
 To rectify this alignment issue, we need to do 2 things:
