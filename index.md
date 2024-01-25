@@ -205,8 +205,10 @@ A more defined standard is std140, which mandates that vec3, along with other ty
 While it retains the less efficient alignment of a vec4, introducing some empty space, this alignment rule is no longer inconsistent across different GPUs.
 
 To rectify this alignment issue, we need to do 2 things:
-1. Change any occurrence of `std430` with `std140`
+
+- Change any occurrence of `std430` with `std140`
 Here's the modified shader alongside the original one:
+
 ```glsl
 // Old
 layout(std430, binding = 0) buffer VertexData {
@@ -219,8 +221,9 @@ layout(std140, binding = 0) buffer VertexData {
 };
 ```
 
-2. Allocate memory for a buffer of vec4 instead of vec3.
+- Allocate memory for a buffer of vec4 instead of vec3.
 Here's the modified line alongside the original one:
+
 ```cpp
 // Old
 glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(vec3) * num_vertices, nullptr, GL_STATIC_DRAW);
