@@ -4,7 +4,7 @@ title: "The Pitfalls of Porting Code to the GPU"
 ---
 
 
-## Article Contents
+## What's This Article About?
 
 When coding for a platform for the first time, it's tempting to assume that the platform's standards won't change much from what you're accustomed to. Typically, the logic remains consistent, regardless of the programming language, compiler/interpreter, and operating system in use.
 
@@ -13,7 +13,7 @@ However, GPUs challenge this "standard." When crafting a shader, its execution m
 This article assumes you possess basic knowledge of C++, Modern OpenGL, GLSL, and matrix/vector math. If you can draw a cube and implement a flying camera using OpenGL, you should be well-prepared. Consider referring to the initial chapters of [learnopengl.com](https://learnopengl.com) to solidify your understanding of the fundamentals.
 
 
-## Reason For The Topic
+## Why This Topic?
 
 I selected this topic because, as a relatively novice GPU programmer, I've encountered mistakes that took considerable time to detect. These errors later caused complications in different areas, making them challenging to pinpoint and fix.
 
