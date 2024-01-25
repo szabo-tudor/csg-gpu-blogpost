@@ -14,9 +14,9 @@
     <header class="page-header" role="banner">
       <h1 style="color: white;" class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 style="color: white;">
-        <a class="author" href="mailto: {{ site.student.number }}.buas.nl">{{ site.author.name }}</a>
+        <a class="author">{{ site.author.name }}</a>
       </h2>
-      <h2 style="color: white;">{{ site.author.email }}</h2>
+      <h2 style="color: white;" href="mailto: {{ site.author.email }}">{{ site.author.email }}</h2>
       <!-- <a href="/" class="btn"> 🏠 </a>
 
       {% for ilo in site.ilos %}
@@ -24,7 +24,7 @@
       {% endfor %} -->
     </header>
 
-    <main id="content" class="main-content" role="main">
+    <main id="content" class="main-content" role="main" style="margin-left: 10%; margin-right: 10%;">
       {{ content }}
 
       <footer class="site-footer">
