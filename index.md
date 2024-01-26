@@ -1,8 +1,9 @@
 ---
 layout: default
-title: "The Pitfalls of Porting Code to the GPU"
+title: "The Pitfalls of Writing Code for the GPU"
 ---
-![buas](buas.png)
+
+<img src="buas.png" width="100%" alt="Breda University of Applied Sciences" />
 
 ## What's This Article About?
 
