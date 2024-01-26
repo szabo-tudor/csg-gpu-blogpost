@@ -3,8 +3,6 @@ layout: default
 title: "The Pitfalls of Writing Code for the GPU"
 ---
 
-<img src="buas.png" width="100%" alt="Breda University of Applied Sciences" />
-
 ## What's This Article About?
 
 When coding for a platform for the first time, it's tempting to assume that the platform's standards won't change much from what you're accustomed to. Typically, the logic remains consistent, regardless of the programming language, compiler/interpreter, and operating system in use.
@@ -301,3 +299,5 @@ If you're a beginner, and you're interested in learning more about GPU programmi
 For those seeking more advanced courses or tutorials, Vulkan presents a compelling alternative to OpenGL. As a more modern API, it offers robust capabilities. However, it comes with increased complexity and is not as beginner-friendly as OpenGL.
 
 One of the advantages of Vulkan, however, is that the API specification is more rigid, and the rules are more clearly defined. This consistency across different GPUs makes Vulkan a more attractive option for those seeking to create cross-platform applications, and problems like the ones described in this article are less likely to occur (although not impossible).
+
+<img src="buas.png" width="15%" alt="Breda University of Applied Sciences" />
