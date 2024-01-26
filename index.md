@@ -2,7 +2,7 @@
 layout: default
 title: "The Pitfalls of Porting Code to the GPU"
 ---
-
+![buas](buas.png)
 
 ## What's This Article About?
 
